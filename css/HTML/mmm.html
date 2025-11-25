@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ticket Transfer</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    padding: 40px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto 40px auto;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+
+  .ticket-top {
+    margin-bottom: 20px;
+  }
+
+  .ticket-header p {
+    margin: 0;
+    font-weight: bold;
+    color: #1c5cb4;
+  }
+
+  .ticket-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+
+  .ticket-sec, .ticket-row, .ticket-seat {
+    text-align: center;
+  }
+
+  .ticket-sec h4, .ticket-row h4, .ticket-seat h4 {
+    color: #1c5cb4;
+    margin: 5px 0 0 0;
+  }
+
+  .seat-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .seat-card {
+    width: 40px;
+    height: 40px;
+    background: #eee;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: #555;
+    transition: background 0.2s;
+  }
+
+  .seat-card.selected {
+    background: #1c5cb4;
+    color: #fff;
+  }
+
+  #selected-count {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #1c5cb4;
+  }
+</style>
+</head>
+<body>
+
+<article class="card" id="screen2">
+  <div class="ticket-top">
+    <div class="ticket-header">
+      <p>Standard Admission</p>
+      <span class="material-symbols-outlined info-icon">info</span>
+    </div>
+    <div class="ticket-info">
+      <div class="ticket-sec">
+        <h5>SEC</h5>
+        <h4 id="sec-display">115</h4>
+      </div>
+      <div class="ticket-row">
+        <h5>ROW</h5>
+        <h4 id="row-display">17</h4>
+      </div>
+      <div class="ticket-seat">
+        <h5>SEAT</h5>
+        <h4 id="seat-display">10</h4>
+      </div>
+    </div>
+  </div>
+</article>
+
+<article class="card" id="screen3">
+  <h3>Select Your Seats</h3>
+  <div class="seat-section">
+    <!-- Example seat -->
+    <div class="seat-card" data-sec="115" data-row="17" data-seat="10">10</div>
+    <div class="seat-card" data-sec="115" data-row="17" data-seat="11">11</div>
+    <div class="seat-card" data-sec="115" data-row="17" data-seat="12">12</div>
+    <div class="seat-card" data-sec="115" data-row="17" data-seat="13">13</div>
+  </div>
+  <div id="selected-count">0 Selected</div>
+</article>
+
+<script>
+  const seats = document.querySelectorAll('.seat-card');
+  const selectedCount = document.getElementById('selected-count');
+
+  const secDisplay = document.getElementById('sec-display');
+  const rowDisplay = document.getElementById('row-display');
+  const seatDisplay = document.getElementById('seat-display');
+
+  seats.forEach(seat => {
+    seat.addEventListener('click', () => {
+      seat.classList.toggle('selected');
+
+      // Update selected count
+      const count = document.querySelectorAll('.seat-card.selected').length;
+      selectedCount.textContent = `${count} Selected`;
+
+      // Update Screen 2 display to the last selected seat
+      if(seat.classList.contains('selected')) {
+        secDisplay.textContent = seat.dataset.sec;
+        rowDisplay.textContent = seat.dataset.row;
+        seatDisplay.textContent = seat.dataset.seat;
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
